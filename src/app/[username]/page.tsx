@@ -6,9 +6,11 @@ import Link from "next/link";
 import {
   AnalysisResponse,
   ProjectDraft,
+  TailoredProjectDraft,
 } from "@/lib/types";
 import { RepoCard } from "@/components/RepoCard";
 import { MarkdownExport } from "@/components/MarkdownExport";
+import { JobTailoringPanel } from "@/components/JobTailoringPanel";
 import {
   ArrowLeft,
   Loader2,
@@ -29,6 +31,7 @@ export default function UserResultsPage() {
   const [loading, setLoading] = useState(true);
   const [loadingStep, setLoadingStep] = useState("Connecting to GitHub API...");
   const [data, setData] = useState<AnalysisResponse | null>(null);
+  const [tailoredProjects, setTailoredProjects] = useState<TailoredProjectDraft[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isGeminiKeyMissing, setIsGeminiKeyMissing] = useState(false);
 
@@ -245,21 +248,48 @@ export default function UserResultsPage() {
           {/* Ranked Projects List */}
           {data.projects.length > 0 && (
             <div className="space-y-6">
+              {/* Phase 3: Job Description Tailoring Panel */}
+              <JobTailoringPanel
+                username={data.username}
+                originalProjects={data.projects}
+                onTailoredChange={setTailoredProjects}
+              />
+
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-white tracking-tight">
-                    Strongest Public Projects
+                  <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                    <span>
+                      {tailoredProjects ? "Role-Tailored Project Order" : "Strongest Public Projects"}
+                    </span>
+                    {tailoredProjects && (
+                      <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800/40">
+                        Tailored View
+                      </span>
+                    )}
                   </h2>
                   <p className="text-xs text-slate-400">
-                    Ranked by originality, commit activity, documentation, and scope.
+                    {tailoredProjects
+                      ? "Re-ordered based on role relevance with direct qualification matches highlighted."
+                      : "Ranked by originality, commit activity, documentation, and scope."}
                   </p>
                 </div>
               </div>
 
               <div className="space-y-6">
-                {data.projects.map((proj) => (
-                  <RepoCard key={proj.repo} project={proj} username={data.username} />
-                ))}
+                {tailoredProjects
+                  ? tailoredProjects.map((item) => (
+                      <RepoCard
+                        key={item.repo}
+                        project={item.originalDraft}
+                        username={data.username}
+                        relevanceScore={item.relevanceScore}
+                        relevanceReason={item.relevanceReason}
+                        isTailored={true}
+                      />
+                    ))
+                  : data.projects.map((proj) => (
+                      <RepoCard key={proj.repo} project={proj} username={data.username} />
+                    ))}
               </div>
             </div>
           )}

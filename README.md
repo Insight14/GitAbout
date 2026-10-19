@@ -149,8 +149,12 @@ npm run test
   - [x] Honest weak spot detection (no tests, sparse README, config/env management) with rehearsal tips
   - [x] Interactive personal rehearsal notes saved in `localStorage`
   - [x] Real-time AI Coach streaming via Vercel AI SDK (`@ai-sdk/google` + `ai`)
-- [ ] **Phase 3: Job Description Tailoring**
-  - Paste job description to re-rank and emphasize matching skill sets
+- [x] **Phase 3: Job Description Tailoring**
+  - [x] Paste any job or internship description (with 1-click role presets)
+  - [x] Re-rank candidate repositories by JD alignment without hallucinating claims
+  - [x] Honest skill gap detection (flagging missing vs adjacent vs matched skills)
+  - [x] "Bridge the Gap" interview talking points for missing technologies
+  - [x] Export tailored Markdown drafts ready for applications
 - [ ] **Phase 4: PDF Export & OAuth**
   - PDF generation and private repo analysis via GitHub OAuth
 

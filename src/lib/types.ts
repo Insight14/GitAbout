@@ -114,6 +114,51 @@ export interface ProjectInterviewPrep {
   generatedAt: string;
 }
 
+// Phase 3: Job Description Tailoring Models
+export interface JobDescriptionInput {
+  jobTitle?: string;
+  company?: string;
+  jobText: string;
+}
+
+export interface SkillMatch {
+  skill: string;
+  status: "matched" | "missing" | "adjacent";
+  matchedRepo?: string;
+  evidence?: string;
+  notes?: string;
+}
+
+export interface HighlightedBullet extends BulletPoint {
+  isDirectMatch: boolean;
+}
+
+export interface TailoredProjectDraft {
+  repo: string;
+  relevanceScore: number;
+  relevanceReason: string;
+  matchedSkills: string[];
+  originalDraft: ProjectDraft;
+  highlightedBullets: HighlightedBullet[];
+}
+
+export interface GapTalkingPoint {
+  missingSkill: string;
+  recommendation: string;
+}
+
+export interface JobTailoringResult {
+  jobTitle: string;
+  company?: string;
+  matchScore: number; // 0 - 100
+  overallSummary: string;
+  matchedSkills: SkillMatch[];
+  missingSkills: SkillMatch[];
+  tailoredProjects: TailoredProjectDraft[];
+  interviewTalkingPointsForGaps: GapTalkingPoint[];
+  analyzedAt: string;
+}
+
 export interface AnalysisResponse {
   username: string;
   profile: {

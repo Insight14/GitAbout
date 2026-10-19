@@ -12,9 +12,18 @@ import { ExternalLink, Star, Calendar, ChevronDown, ChevronUp, Award } from "luc
 interface RepoCardProps {
   project: ProjectDraft;
   username: string;
+  relevanceScore?: number;
+  relevanceReason?: string;
+  isTailored?: boolean;
 }
 
-export function RepoCard({ project, username }: RepoCardProps) {
+export function RepoCard({
+  project,
+  username,
+  relevanceScore,
+  relevanceReason,
+  isTailored,
+}: RepoCardProps) {
   const [showScoreDetails, setShowScoreDetails] = useState(false);
 
   return (
@@ -41,10 +50,23 @@ export function RepoCard({ project, username }: RepoCardProps) {
           <p className="text-sm text-slate-300 mt-1 italic">
             &ldquo;{project.summary}&rdquo;
           </p>
+
+          {isTailored && relevanceReason && (
+            <p className="text-xs text-purple-300 font-medium mt-1 flex items-center gap-1.5 bg-purple-950/30 px-2 py-0.5 rounded border border-purple-900/40 w-fit">
+              <span>🎯 {relevanceReason}</span>
+            </p>
+          )}
         </div>
 
         {/* Badges / Heuristic Breakdown */}
         <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-wrap">
+          {isTailored && typeof relevanceScore === "number" && (
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-purple-950/60 text-purple-200 border border-purple-700/60 shadow-md">
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span>Role Match: {relevanceScore}%</span>
+            </div>
+          )}
+
           <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
             <Calendar className="w-3.5 h-3.5 text-slate-500" />
             <span>Updated {formatDate(project.pushedAt)}</span>
