@@ -5,14 +5,16 @@ import { ProjectDraft } from "@/lib/types";
 import { BulletList } from "./BulletList";
 import { SkillsList } from "./SkillsList";
 import { MissingInfoPrompt } from "./MissingInfoPrompt";
+import { InterviewPrepSection } from "./InterviewPrepSection";
 import { formatDate } from "@/lib/utils";
 import { ExternalLink, Star, Calendar, ChevronDown, ChevronUp, Award } from "lucide-react";
 
 interface RepoCardProps {
   project: ProjectDraft;
+  username: string;
 }
 
-export function RepoCard({ project }: RepoCardProps) {
+export function RepoCard({ project, username }: RepoCardProps) {
   const [showScoreDetails, setShowScoreDetails] = useState(false);
 
   return (
@@ -98,6 +100,14 @@ export function RepoCard({ project }: RepoCardProps) {
 
       {/* Missing Info Prompt */}
       <MissingInfoPrompt questions={project.missing_info} />
+
+      {/* Phase 2: Technical Interview Q&A Prep */}
+      <InterviewPrepSection
+        username={username}
+        repoName={project.repo}
+        pushedAt={project.pushedAt}
+        repoUrl={project.repoUrl}
+      />
     </div>
   );
 }

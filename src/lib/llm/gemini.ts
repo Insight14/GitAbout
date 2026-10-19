@@ -190,13 +190,13 @@ Generate 2-3 evidence-backed resume bullets, identified technical skills with ci
 }
 
 function createConservativeFallback(context: CondensedRepoContext): ValidatedProjectDraft {
-  const bullets = [
+  const bullets: ValidatedProjectDraft["bullets"] = [
     {
       text: `Engineered repository codebase utilizing ${context.primaryLanguage}${
         context.languages.length > 1 ? ` and ${context.languages.slice(1).join(", ")}` : ""
       }`,
       source: `GitHub repository language: ${context.primaryLanguage}`,
-      confidence: "medium" as const,
+      confidence: "medium",
     },
   ];
 

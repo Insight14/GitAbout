@@ -258,7 +258,7 @@ export default function UserResultsPage() {
 
               <div className="space-y-6">
                 {data.projects.map((proj) => (
-                  <RepoCard key={proj.repo} project={proj} />
+                  <RepoCard key={proj.repo} project={proj} username={data.username} />
                 ))}
               </div>
             </div>

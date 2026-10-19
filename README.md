@@ -143,10 +143,12 @@ npm run test
   - [x] Gemini structured generation with Zod validation and citation enforcement
   - [x] Multi-tier caching and per-IP rate limiting
   - [x] Markdown export and interactive UI
-- [ ] **Phase 2: Technical Interview Q&A Prep**
-  - Architecture, tradeoffs, and system design questions
-  - Flagged weak spots (no tests, missing README, unhandled errors)
-  - Vercel AI SDK streaming
+- [x] **Phase 2: Technical Interview Q&A Prep**
+  - [x] Categorized interview questions (architecture, tradeoffs, challenge, testing, scaling, improvements)
+  - [x] Evidence-grounded talking points with source citations
+  - [x] Honest weak spot detection (no tests, sparse README, config/env management) with rehearsal tips
+  - [x] Interactive personal rehearsal notes saved in `localStorage`
+  - [x] Real-time AI Coach streaming via Vercel AI SDK (`@ai-sdk/google` + `ai`)
 - [ ] **Phase 3: Job Description Tailoring**
   - Paste job description to re-rank and emphasize matching skill sets
 - [ ] **Phase 4: PDF Export & OAuth**

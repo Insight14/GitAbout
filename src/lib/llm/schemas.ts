@@ -21,6 +21,43 @@ export const ProjectDraftSchema = z.object({
 
 export type ValidatedProjectDraft = z.infer<typeof ProjectDraftSchema>;
 
+export const QuestionCategorySchema = z.enum([
+  "architecture",
+  "tradeoffs",
+  "challenge",
+  "testing",
+  "scaling",
+  "improvements",
+]);
+
+export const InterviewQuestionSchema = z.object({
+  question: z.string().min(5),
+  category: QuestionCategorySchema,
+  talkingPoints: z.array(
+    z.object({
+      point: z.string().min(3),
+      evidence: z.string().min(1),
+    })
+  ),
+  isRepoSilent: z.boolean(),
+  suggestedAnswerStrategy: z.string().min(3),
+});
+
+export const WeakSpotFlagSchema = z.object({
+  area: z.string().min(2),
+  description: z.string().min(5),
+  rehearsalTip: z.string().min(5),
+});
+
+export const ProjectInterviewPrepSchema = z.object({
+  repo: z.string().min(1),
+  questions: z.array(InterviewQuestionSchema),
+  weakSpots: z.array(WeakSpotFlagSchema),
+  generatedAt: z.string().optional(),
+});
+
+export type ValidatedInterviewPrep = z.infer<typeof ProjectInterviewPrepSchema>;
+
 export interface ValidationResult {
   valid: boolean;
   data?: ValidatedProjectDraft;
@@ -32,7 +69,6 @@ export function validateProjectDraftResponse(raw: unknown): ValidationResult {
   const result = ProjectDraftSchema.safeParse(raw);
 
   if (result.success) {
-    // Check if any bullet has empty or whitespace-only source
     const invalidBullets = result.data.bullets.filter(
       (b) => !b.source || b.source.trim().length === 0
     );
@@ -51,7 +87,6 @@ export function validateProjectDraftResponse(raw: unknown): ValidationResult {
     };
   }
 
-  // Inspect Zod issue paths to see if 'source' was missing
   const hasMissingSource = result.error.issues.some((issue) =>
     issue.path.includes("source")
   );
@@ -63,9 +98,6 @@ export function validateProjectDraftResponse(raw: unknown): ValidationResult {
   };
 }
 
-/**
- * Filter out any invalid bullets as a final fallback after retry
- */
 export function dropInvalidBullets(bullets: unknown[]): z.infer<typeof BulletPointSchema>[] {
   if (!Array.isArray(bullets)) return [];
   const valid: z.infer<typeof BulletPointSchema>[] = [];

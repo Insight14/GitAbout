@@ -82,6 +82,38 @@ export interface ProjectDraft {
   pushedAt: string;
 }
 
+export type QuestionCategory =
+  | "architecture"
+  | "tradeoffs"
+  | "challenge"
+  | "testing"
+  | "scaling"
+  | "improvements";
+
+export interface InterviewQuestion {
+  question: string;
+  category: QuestionCategory;
+  talkingPoints: {
+    point: string;
+    evidence: string;
+  }[];
+  isRepoSilent: boolean;
+  suggestedAnswerStrategy: string;
+}
+
+export interface WeakSpotFlag {
+  area: string;
+  description: string;
+  rehearsalTip: string;
+}
+
+export interface ProjectInterviewPrep {
+  repo: string;
+  questions: InterviewQuestion[];
+  weakSpots: WeakSpotFlag[];
+  generatedAt: string;
+}
+
 export interface AnalysisResponse {
   username: string;
   profile: {
