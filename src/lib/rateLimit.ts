@@ -38,6 +38,22 @@ function getUpstashLimiter(): Ratelimit | null {
 }
 
 export async function checkRateLimit(clientIp: string): Promise<RateLimitResult> {
+  const isLocalhost =
+    clientIp === "127.0.0.1" ||
+    clientIp === "::1" ||
+    clientIp === "localhost" ||
+    process.env.NODE_ENV === "development";
+
+  // In local development, bypass the 5/hr throttle so the developer is not locked out while building
+  if (isLocalhost && !process.env.UPSTASH_REDIS_REST_URL) {
+    return {
+      success: true,
+      limit: 1000,
+      remaining: 999,
+      reset: Date.now() + 3600000,
+    };
+  }
+
   const limiter = getUpstashLimiter();
 
   if (limiter) {
