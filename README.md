@@ -148,15 +148,17 @@ npm run test
   - [x] Evidence-grounded talking points with source citations
   - [x] Honest weak spot detection (no tests, sparse README, config/env management) with rehearsal tips
   - [x] Interactive personal rehearsal notes saved in `localStorage`
-  - [x] Real-time AI Coach streaming via Vercel AI SDK (`@ai-sdk/google` + `ai`)
 - [x] **Phase 3: Job Description Tailoring**
   - [x] Paste any job or internship description (with 1-click role presets)
   - [x] Re-rank candidate repositories by JD alignment without hallucinating claims
   - [x] Honest skill gap detection (flagging missing vs adjacent vs matched skills)
   - [x] "Bridge the Gap" interview talking points for missing technologies
   - [x] Export tailored Markdown drafts ready for applications
-- [ ] **Phase 4: PDF Export & OAuth**
-  - PDF generation and private repo analysis via GitHub OAuth
+- [x] **Phase 4: PDF Export, In-Place Editing, & Mock Interview Mode**
+  - [x] One-click ATS-friendly PDF resume export (`@react-pdf/renderer`)
+  - [x] In-place bullet and summary editing with `localStorage` persistence
+  - [x] Add custom metrics & impact bullets directly on the card
+  - [x] Mock Interview Mode with 2-minute timed flashcard practice and coaching reveals
 
 ---
 

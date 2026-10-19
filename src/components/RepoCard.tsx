@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ProjectDraft } from "@/lib/types";
 import { BulletList } from "./BulletList";
+import { EditableBullets } from "./EditableBullets";
 import { SkillsList } from "./SkillsList";
 import { MissingInfoPrompt } from "./MissingInfoPrompt";
 import { InterviewPrepSection } from "./InterviewPrepSection";
@@ -109,13 +110,14 @@ export function RepoCard({
         </div>
       )}
 
-      {/* Bullets Section */}
-      <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Evidence-Grounded Resume Bullets
-        </h4>
-        <BulletList bullets={project.bullets} repoUrl={project.repoUrl} />
-      </div>
+      {/* Bullets Section with Inline Editing & Local Persistence */}
+      <EditableBullets
+        username={username}
+        repoName={project.repo}
+        repoUrl={project.repoUrl}
+        initialBullets={project.bullets}
+        initialSummary={project.summary}
+      />
 
       {/* Skills Section */}
       <SkillsList skills={project.skills} />

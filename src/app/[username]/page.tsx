@@ -10,6 +10,7 @@ import {
 } from "@/lib/types";
 import { RepoCard } from "@/components/RepoCard";
 import { MarkdownExport } from "@/components/MarkdownExport";
+import { PdfExportButton } from "@/components/pdf/PdfExportButton";
 import { JobTailoringPanel } from "@/components/JobTailoringPanel";
 import {
   ArrowLeft,
@@ -100,7 +101,15 @@ export default function UserResultsPage() {
         </Link>
 
         {data && data.projects.length > 0 && (
-          <MarkdownExport username={data.username} projects={data.projects} />
+          <div className="flex items-center gap-2">
+            <PdfExportButton
+              username={data.username}
+              name={data.profile.name}
+              bio={data.profile.bio}
+              projects={data.projects}
+            />
+            <MarkdownExport username={data.username} projects={data.projects} />
+          </div>
         )}
       </div>
 

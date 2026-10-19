@@ -8,6 +8,7 @@ import {
 } from "@/lib/types";
 import { WeakSpotsList } from "./WeakSpotsList";
 import { EvidenceLink } from "./EvidenceLink";
+import { MockInterviewModal } from "./MockInterviewModal";
 import {
   MessageSquareQuote,
   Sparkles,
@@ -21,6 +22,7 @@ import {
   HelpCircle,
   Play,
   RotateCcw,
+  Mic,
 } from "lucide-react";
 
 interface InterviewPrepSectionProps {
@@ -55,6 +57,7 @@ export function InterviewPrepSection({
   // Streaming state
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamContent, setStreamContent] = useState<string>("");
+  const [isMockModalOpen, setIsMockModalOpen] = useState(false);
 
   // Load saved notes from localStorage
   useEffect(() => {
@@ -196,36 +199,55 @@ export function InterviewPrepSection({
               {/* Weak Spots Analysis */}
               <WeakSpotsList weakSpots={prepData.weakSpots} />
 
-              {/* Streaming AI Coach Toggle */}
+              {/* Streaming AI Coach & Mock Interview Practice Mode */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-lg bg-slate-900/60 border border-slate-800 text-xs">
                 <div>
                   <div className="font-semibold text-white flex items-center gap-1.5">
                     <Radio className="w-3.5 h-3.5 text-pink-400 animate-pulse" />
-                    <span>Real-Time AI Interview Coach</span>
+                    <span>Real-Time AI Coach & Practice Mode</span>
                   </div>
                   <p className="text-slate-400 text-[11px] mt-0.5">
-                    Stream live architectural analysis and advice using Vercel AI SDK + Gemini
+                    Stream live architectural analysis or enter timed 2-minute mock practice mode
                   </p>
                 </div>
 
-                <button
-                  onClick={startStream}
-                  disabled={isStreaming}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-pink-600 hover:bg-pink-500 disabled:opacity-50 text-white font-medium shrink-0 transition-colors"
-                >
-                  {isStreaming ? (
-                    <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>Streaming...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-3.5 h-3.5" />
-                      <span>Stream Coach</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                  <button
+                    onClick={() => setIsMockModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-pink-600 hover:bg-pink-500 text-white font-medium transition-colors shadow-sm"
+                  >
+                    <Mic className="w-3.5 h-3.5" />
+                    <span>Mock Interview Mode</span>
+                  </button>
+
+                  <button
+                    onClick={startStream}
+                    disabled={isStreaming}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white font-medium transition-colors border border-slate-700"
+                  >
+                    {isStreaming ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Streaming...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5" />
+                        <span>Stream Coach</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
+
+              {/* Mock Interview Modal */}
+              <MockInterviewModal
+                repoName={repoName}
+                questions={prepData.questions}
+                weakSpots={prepData.weakSpots}
+                isOpen={isMockModalOpen}
+                onClose={() => setIsMockModalOpen(false)}
+              />
 
               {/* Stream output box */}
               {streamContent && (
