@@ -1,5 +1,5 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
 import { ProjectDraft } from "@/lib/types";
 
 const styles = StyleSheet.create({
@@ -129,6 +129,7 @@ interface ResumePdfProps {
   bio: string | null;
   projects: ProjectDraft[];
   jobTitle?: string;
+  logoSrc?: string;
 }
 
 export function ResumePdfDocument({
@@ -137,6 +138,7 @@ export function ResumePdfDocument({
   bio,
   projects,
   jobTitle,
+  logoSrc,
 }: ResumePdfProps) {
   // Aggregate verified skills across all projects
   const verifiedSkills = Array.from(
@@ -148,16 +150,23 @@ export function ResumePdfDocument({
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.name}>{name || username}</Text>
-          <Text style={styles.subtitle}>
-            {jobTitle || "Software Engineer • Evidence-Grounded Portfolio"}
-          </Text>
-          <View style={styles.contactBar}>
-            <Text>GitHub: github.com/{username}</Text>
-            <Text>•</Text>
-            <Text>Portfolio: gitabout.com/{username}</Text>
-            <Text>•</Text>
-            <Text>Verified Codebase Evidence</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+            <View style={{ flex: 1, paddingRight: 12 }}>
+              <Text style={styles.name}>{name || username}</Text>
+              <Text style={styles.subtitle}>
+                {jobTitle || "Software Engineer • Evidence-Grounded Portfolio"}
+              </Text>
+              <View style={styles.contactBar}>
+                <Text>GitHub: github.com/{username}</Text>
+                <Text>•</Text>
+                <Text>Portfolio: gitabout.com/{username}</Text>
+                <Text>•</Text>
+                <Text>Verified Codebase Evidence</Text>
+              </View>
+            </View>
+            {logoSrc && (
+              <Image src={logoSrc} style={{ width: 44, height: 44, borderRadius: 22 }} />
+            )}
           </View>
         </View>
 

@@ -30,6 +30,7 @@ interface InterviewPrepSectionProps {
   repoName: string;
   pushedAt: string;
   repoUrl: string;
+  defaultOpen?: boolean;
 }
 
 const CATEGORY_LABELS: Record<QuestionCategory, string> = {
@@ -46,8 +47,9 @@ export function InterviewPrepSection({
   repoName,
   pushedAt,
   repoUrl,
+  defaultOpen = false,
 }: InterviewPrepSectionProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const [loading, setLoading] = useState(false);
   const [prepData, setPrepData] = useState<ProjectInterviewPrep | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");

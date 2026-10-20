@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="./public/assets/hero-banner.jpg" alt="GitAbout Hero Banner" width="100%" />
+  <img src="./public/logo.png" alt="GitAnswer QA Logo" width="130" />
 </p>
 
-<h1 align="center">GitAbout</h1>
+<h1 align="center">GitAnswer (GitAbout)</h1>
 
 <p align="center">
   <strong>Transform public GitHub repositories into evidence-grounded resume drafts and technical interview prep. Zero hallucination. Every claim cited.</strong>
@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="#-key-features">Features</a> •
+  <a href="#-interactive-studio-workspace">Studio Workspace</a> •
   <a href="#-architecture">Architecture</a> •
   <a href="#-quickstart">Quickstart</a> •
   <a href="#-non-negotiable-product-rules">Rules</a> •
